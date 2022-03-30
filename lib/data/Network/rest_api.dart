@@ -1,9 +1,7 @@
 //
 import 'dart:convert';
-
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../utils/constant.dart';
 
 //get auth token
@@ -44,6 +42,7 @@ Future getToken() async {
   }
 }
 
+//REGISTER
 Future register({
   required String companyName,
   required String firstName,

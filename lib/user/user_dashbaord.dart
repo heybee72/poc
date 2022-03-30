@@ -5,7 +5,7 @@ import 'inner_screens/active_screen.dart';
 import 'inner_screens/expired_screen.dart';
 
 class UserDashbaord extends StatefulWidget {
-  const UserDashbaord({Key? key}) : super(key: key);
+  UserDashbaord({Key? key}) : super(key: key);
 
   @override
   _UserDashbaordState createState() => _UserDashbaordState();
@@ -14,8 +14,8 @@ class UserDashbaord extends StatefulWidget {
 class _UserDashbaordState extends State<UserDashbaord> {
   int index = 0;
   List _pages = [
-    ActiveScreen(),
-    ExpiredScreen(),
+    const ActiveScreen(),
+    const ExpiredScreen(),
   ];
 
   @override
@@ -24,15 +24,15 @@ class _UserDashbaordState extends State<UserDashbaord> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 16.0),
+        leading: const Padding(
+          padding: EdgeInsets.only(left: 16.0),
           child: Icon(
             Icons.menu,
             color: Constant.blue_color,
             size: 40,
           ),
         ),
-        actions: [
+        actions: const [
           Icon(Icons.search_outlined, color: Constant.lighblue_color, size: 40),
           SizedBox(
             width: 20,
@@ -48,14 +48,14 @@ class _UserDashbaordState extends State<UserDashbaord> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Welcome Ayoo,"),
-            Text("Manage your trucks "),
+            const Text("Welcome Ayoo,"),
+            const Text("Manage your trucks "),
             Container(
               child: Row(
                 children: [
                   Card(
                     child: Column(
-                      children: [
+                      children: const [
                         Text("Total trucks"),
                         Text("14"),
                       ],
@@ -63,7 +63,7 @@ class _UserDashbaordState extends State<UserDashbaord> {
                   ),
                   Card(
                     child: Column(
-                      children: [
+                      children: const [
                         Text("Comments"),
                         Text("14"),
                       ],
@@ -71,7 +71,7 @@ class _UserDashbaordState extends State<UserDashbaord> {
                   ),
                   Card(
                     child: Column(
-                      children: [
+                      children: const [
                         Text("Messages"),
                         Text("14"),
                       ],
@@ -83,7 +83,7 @@ class _UserDashbaordState extends State<UserDashbaord> {
             Padding(
               padding:
                   const EdgeInsets.only(top: 20.0, bottom: 20.0, right: 20),
-              child: Container(
+              child: SizedBox(
                 height: 57,
                 width: MediaQuery.of(context).size.width * 0.5,
                 child: ElevatedButton(
@@ -97,8 +97,8 @@ class _UserDashbaordState extends State<UserDashbaord> {
                   onPressed: () {},
                   child: Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 8.0),
                         child: Text(
                           "Add New Truck",
                           style: TextStyle(
@@ -110,7 +110,7 @@ class _UserDashbaordState extends State<UserDashbaord> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.04,
                       ),
-                      Icon(Icons.add),
+                      const Icon(Icons.add),
                     ],
                   ),
                 ),
@@ -122,7 +122,7 @@ class _UserDashbaordState extends State<UserDashbaord> {
               child: TabBar(
                 tabs: [
                   Container(
-                    margin: EdgeInsets.only(top: 25),
+                    margin: const EdgeInsets.only(top: 25),
                     alignment: Alignment.center,
                     color: Colors.white24,
                     height: 82.0,
@@ -137,7 +137,7 @@ class _UserDashbaordState extends State<UserDashbaord> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 25),
+                    margin: const EdgeInsets.only(top: 25),
                     alignment: Alignment.center,
                     color: Colors.white24,
                     height: 82.0,
@@ -154,7 +154,7 @@ class _UserDashbaordState extends State<UserDashbaord> {
                 ],
               ),
             ),
-            TabBarView(
+            const TabBarView(
               // physics: NeverScrollableScrollPhysics(),
               children: [
                 ActiveScreen(),

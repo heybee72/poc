@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trucks/data/Network/rest_api.dart';
+import 'package:trucks/user/user_dashbaord.dart';
 import 'package:trucks/utils/constant.dart';
 
+import '../onboarding/get_started.dart';
+import '../utils/widgets.dart';
+
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({Key? key}) : super(key: key);
+
+  TextEditingController passwordTEC = TextEditingController();
+  TextEditingController emailTEC = TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,54 +45,52 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.05,
               ),
-              Container(
-                child: Text(
-                  'Welcome back',
-                  style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w900,
-                      color: Constant.blue_color,
-                      fontStyle: FontStyle.italic),
-                ),
+              const Text(
+                'Welcome back',
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w900,
+                    color: Constant.blue_color,
+                    fontStyle: FontStyle.italic),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.02,
               ),
-              Container(
-                child: Text(
-                  'Please provide your login details',
-                  style: TextStyle(fontSize: 16, color: Constant.blue_color),
-                ),
+              const Text(
+                'Please provide your login details',
+                style: TextStyle(fontSize: 16, color: Constant.blue_color),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.05,
               ),
               Form(
+                key: formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 24),
+                    const SizedBox(height: 24),
                     _labelText('Your Email'),
-                    SizedBox(height: 6),
+                    const SizedBox(height: 6),
                     TextFormField(
                       onSaved: (value) {
                         email = value!;
                       },
+                      controller: emailTEC,
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.emailAddress,
-                      key: ValueKey('email'),
+                      key: const ValueKey('email'),
                       decoration: InputDecoration(
                         hintText: 'Enter email',
-                        hintStyle:
-                            TextStyle(color: Color(0XFF777777), fontSize: 16.0),
+                        hintStyle: const TextStyle(
+                            color: Color(0XFF777777), fontSize: 16.0),
                         filled: true,
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
                               color: Constant.blue_color, width: 2.0),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                             color: Constant.grey_color,
                             width: 2.0,
                           ),
@@ -95,28 +103,29 @@ class LoginScreen extends StatelessWidget {
                         return null;
                       },
                     ),
-                    SizedBox(height: 24),
+                    const SizedBox(height: 24),
                     _labelText('Password'),
-                    SizedBox(height: 6),
+                    const SizedBox(height: 6),
                     TextFormField(
                       onSaved: (value) {
                         password = value!;
                       },
+                      controller: passwordTEC,
                       obscureText: true,
-                      key: ValueKey('password'),
+                      key: const ValueKey('password'),
                       decoration: InputDecoration(
                         hintText: 'Password',
-                        hintStyle: TextStyle(
+                        hintStyle: const TextStyle(
                           color: Color(0XFF777777),
                         ),
                         filled: true,
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
                               color: Constant.blue_color, width: 2.0),
                         ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                             color: Constant.grey_color,
                             width: 2.0,
                           ),
@@ -129,10 +138,10 @@ class LoginScreen extends StatelessWidget {
                         return null;
                       },
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     Container(
                       height: 60.0,
-                      margin: EdgeInsets.only(top: 26.0, bottom: 8.0),
+                      margin: const EdgeInsets.only(top: 26.0, bottom: 8.0),
                       width: double.infinity,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -142,7 +151,7 @@ class LoginScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(12.0),
                           ),
                         ),
-                        child: Text(
+                        child: const Text(
                           "Login",
                           style: TextStyle(
                             fontSize: 17,
@@ -150,16 +159,44 @@ class LoginScreen extends StatelessWidget {
                             fontWeight: FontWeight.w800,
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          //
+                          loadingDialog(context, "Please Wait");
+
+                          var result = await login(
+                              username: emailTEC.text,
+                              password: passwordTEC.text);
+                          if (result['error'] == false) {
+                            Navigator.pop(context);
+                            //naviagte to Home screen
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UserDashbaord()));
+                          } else {
+                            Navigator.pop(context);
+                            openDialog(context, "Registration State",
+                                "Registration Failed... \n ${result['message']}",
+                                () {
+                              Navigator.pop(context);
+                            });
+                          }
+                        },
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Center(
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          //naviagte to register screen
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => GetStarted()));
+                        },
                         child: RichText(
                             textAlign: TextAlign.center,
-                            text: TextSpan(
+                            text: const TextSpan(
                                 style: TextStyle(
                                   fontSize: 16.0,
                                   color: Constant.pink_color,
@@ -188,7 +225,7 @@ class LoginScreen extends StatelessWidget {
   Text _labelText(String title) {
     return Text(
       "${title}",
-      style: TextStyle(
+      style: const TextStyle(
           fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black),
     );
   }

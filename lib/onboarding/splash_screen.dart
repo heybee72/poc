@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trucks/onboarding/get_started.dart';
 import 'package:trucks/utils/constant.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -40,21 +41,19 @@ class SplashScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    child: Text(
-                      'Hire a truck for your Logistics',
-                      style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.w900,
-                          color: Constant.blue_color,
-                          fontStyle: FontStyle.italic),
-                    ),
+                  const Text(
+                    'Hire a truck for your Logistics',
+                    style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.w900,
+                        color: Constant.blue_color,
+                        fontStyle: FontStyle.italic),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 14),
-                    child: Container(
+                    child: SizedBox(
                       width: MediaQuery.of(context).size.width / 1.25,
-                      child: Text(
+                      child: const Text(
                         "POC let’s you find and connect with truck drivers accross the nation to accomplish your logsitic goals.",
                         style: TextStyle(
                           fontSize: 16,
@@ -69,7 +68,7 @@ class SplashScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(
                             top: 20.0, bottom: 20.0, right: 20),
-                        child: Container(
+                        child: SizedBox(
                           height: 50,
                           width: MediaQuery.of(context).size.width * 0.6,
                           child: ElevatedButton(
@@ -80,31 +79,43 @@ class SplashScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(6.0),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              //Navigate to register screen
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return GetStarted();
+                              }));
+                            },
                             child: Row(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left:8.0),
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 8.0),
                                   child: Text(
                                     "Let’s Get Started",
                                     style: TextStyle(
-                                        color: Colors.white, fontSize: 16, fontWeight: FontWeight.w800),
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w800),
                                   ),
                                 ),
                                 SizedBox(
                                   width:
                                       MediaQuery.of(context).size.width * 0.08,
                                 ),
-                                Icon(Icons.arrow_forward),
+                                const Icon(Icons.arrow_forward),
                               ],
                             ),
                           ),
                         ),
                       ),
-                      Container(
-                        child: TextButton(
-                          onPressed: () {},
-                          child: Text("Login", style: TextStyle(color: Constant.blue_color, fontSize: 16, fontWeight: FontWeight.w800),),
+                      TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          "Login",
+                          style: TextStyle(
+                              color: Constant.blue_color,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w800),
                         ),
                       ),
                     ],
