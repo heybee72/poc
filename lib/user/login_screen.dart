@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trucks/data/Network/rest_api.dart';
 import 'package:trucks/user/user_dashbaord.dart';
@@ -78,6 +79,9 @@ class LoginScreen extends StatelessWidget {
                       controller: emailTEC,
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.emailAddress,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(RegExp('[ ]')),
+                      ],
                       key: const ValueKey('email'),
                       decoration: InputDecoration(
                         hintText: 'Enter email',
@@ -113,6 +117,9 @@ class LoginScreen extends StatelessWidget {
                       controller: passwordTEC,
                       obscureText: true,
                       key: const ValueKey('password'),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(RegExp('[ ]')),
+                      ],
                       decoration: InputDecoration(
                         hintText: 'Password',
                         hintStyle: const TextStyle(

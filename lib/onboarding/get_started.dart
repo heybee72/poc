@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trucks/onboarding/select_screen.dart';
 import 'package:trucks/user/login_screen.dart';
@@ -82,7 +83,7 @@ class GetStarted extends StatelessWidget {
                     controller: companyTEC,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.emailAddress,
-                    key: const ValueKey('Company name'),
+                    // key: const ValueKey('Company name'),
                     decoration: InputDecoration(
                       hintText: 'Enter your Company name',
                       hintStyle: const TextStyle(
@@ -110,6 +111,7 @@ class GetStarted extends StatelessWidget {
                   ),
 
                   //
+                  const SizedBox(height: 24),
                   _labelText('Your Name'),
                   const SizedBox(height: 6),
                   //name
@@ -119,7 +121,7 @@ class GetStarted extends StatelessWidget {
                     },
                     controller: nameTEC,
                     keyboardType: TextInputType.text,
-                    key: const ValueKey('name'),
+                    // key: const ValueKey('name'),
                     decoration: InputDecoration(
                       hintText: 'Enter full name',
                       hintStyle: const TextStyle(
@@ -156,9 +158,12 @@ class GetStarted extends StatelessWidget {
                       email = value!;
                     },
                     controller: phoneNumTEC,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(RegExp('[ ]')),
+                    ],
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.emailAddress,
-                    key: const ValueKey('email'),
+                    // key: const ValueKey('email'),
                     decoration: InputDecoration(
                       hintText: 'Enter phone number',
                       hintStyle: const TextStyle(
@@ -198,7 +203,10 @@ class GetStarted extends StatelessWidget {
                     controller: emailTEC,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.emailAddress,
-                    key: const ValueKey('email'),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(RegExp('[ ]')),
+                    ],
+                    // key: const ValueKey('email'),
                     decoration: InputDecoration(
                       hintText: 'Enter email',
                       hintStyle: const TextStyle(
@@ -234,8 +242,11 @@ class GetStarted extends StatelessWidget {
                       password = value!;
                     },
                     controller: passwordTEC,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(RegExp('[ ]')),
+                    ],
                     obscureText: true,
-                    key: const ValueKey('password'),
+                    // key: const ValueKey('password'),
                     decoration: InputDecoration(
                       hintText: 'Password',
                       hintStyle: const TextStyle(
@@ -261,7 +272,7 @@ class GetStarted extends StatelessWidget {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 20),
                   Container(
                     height: 60.0,
                     margin: const EdgeInsets.only(top: 26.0, bottom: 8.0),
@@ -308,7 +319,7 @@ class GetStarted extends StatelessWidget {
                           prefs.setString("password", passwordTEC.text);
 
                           //Navigate to select screen
-                          Navigator.pushReplacement(
+                          Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => SelectScreen()));

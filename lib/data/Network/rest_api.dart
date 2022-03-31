@@ -58,7 +58,9 @@ Future register({
   //get token
   var result = await getToken();
 
-  if (result['error'] != false) {
+  print("result:: $result");
+
+  if (result["error"] == false) {
     String accessToken = prefs.getString('token').toString();
 
     var body = {
@@ -91,7 +93,7 @@ Future register({
       print("Registration error ++++++++++");
       var result = {
         "error": true,
-        "message": json.decode(response.body)['error_description'],
+        "message": json.decode(response.body)['responseMessage'],
       };
       return result;
     }
@@ -115,7 +117,7 @@ Future login({
   //get token
   var result = await getToken();
 
-  if (result['error'] != false) {
+  if (result['error'] == false) {
     String accessToken = prefs.getString('token').toString();
 
     var body = {
@@ -131,9 +133,10 @@ Future login({
         },
         body: json.encode(body));
 
-    print("Registration response:: ${response.body}");
+    print("Login response:: ${response.body}");
     if (response.statusCode == 200 &&
-        json.decode(response.body)['responseMessage'] == "Successful") {
+        json.decode(response.body)['responseMessage'] ==
+            "User Authentication was successful") {
       var result = {
         "error": false,
         "message": json.decode(response.body)['responseMessage'],

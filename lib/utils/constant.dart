@@ -9,4 +9,4 @@ class Constant {
   static const Color lighblue_color = Color(0XFF5471E8);
 }
 
-const baseUrl = "aikaloadservice-dev.herokuapp.com";
+const baseUrl = "https://aikaloadservice-dev.herokuapp.com";

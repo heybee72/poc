@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trucks/data/Network/rest_api.dart';
+import 'package:trucks/user/login_screen.dart';
 import 'package:trucks/utils/constant.dart';
 
 import '../utils/widgets.dart';
@@ -240,9 +241,11 @@ class _SelectScreenState extends State<SelectScreen> {
                       if (result['error'] == false) {
                         Navigator.pop(context);
                         openDialog(context, "Registration State",
-                            "Registration Successfull... please check your mail to verify your account",
-                            () {
-                          Navigator.pop(context);
+                            "Registration Successfull... Please Login)", () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()));
                         });
                       } else {
                         Navigator.pop(context);

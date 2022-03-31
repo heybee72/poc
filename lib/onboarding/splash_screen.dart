@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trucks/onboarding/get_started.dart';
+import 'package:trucks/user/login_screen.dart';
 import 'package:trucks/utils/constant.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -109,7 +110,13 @@ class SplashScreen extends StatelessWidget {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          //Navigate to login screen
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return LoginScreen();
+                          }));
+                        },
                         child: const Text(
                           "Login",
                           style: TextStyle(

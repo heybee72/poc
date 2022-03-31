@@ -13,10 +13,17 @@ class UserDashbaord extends StatefulWidget {
 
 class _UserDashbaordState extends State<UserDashbaord> {
   int index = 0;
-  List _pages = [
+  List<Widget> _pages = [
     const ActiveScreen(),
     const ExpiredScreen(),
   ];
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,50 +123,52 @@ class _UserDashbaordState extends State<UserDashbaord> {
                 ),
               ),
             ),
+
+            //
             DefaultTabController(
               length: 2,
               initialIndex: 0,
               child: TabBar(
                 tabs: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 25),
-                    alignment: Alignment.center,
-                    color: Colors.white24,
-                    height: 82.0,
-                    child: Text(
-                      "Active",
-                      style: TextStyle(
-                          color: index == 0
-                              ? Constant.blue_color
-                              : Constant.grey_color,
-                          fontSize: 17.0,
-                          fontWeight: FontWeight.bold),
+                  Tab(
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 25),
+                      alignment: Alignment.center,
+                      color: Colors.white24,
+                      height: 82.0,
+                      child: Text(
+                        "Active",
+                        style: TextStyle(
+                            color: index == 0
+                                ? Constant.blue_color
+                                : Constant.grey_color,
+                            fontSize: 17.0,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 25),
-                    alignment: Alignment.center,
-                    color: Colors.white24,
-                    height: 82.0,
-                    child: Text(
-                      "Expired",
-                      style: TextStyle(
-                          color: index == 1
-                              ? Constant.blue_color
-                              : Constant.grey_color,
-                          fontSize: 17.0,
-                          fontWeight: FontWeight.bold),
+                  Tab(
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 25),
+                      alignment: Alignment.center,
+                      color: Colors.white24,
+                      height: 82.0,
+                      child: Text(
+                        "Expired",
+                        style: TextStyle(
+                            color: index == 1
+                                ? Constant.blue_color
+                                : Constant.grey_color,
+                            fontSize: 17.0,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-            const TabBarView(
-              // physics: NeverScrollableScrollPhysics(),
-              children: [
-                ActiveScreen(),
-                ExpiredScreen(),
-              ],
+            TabBarView(
+              children: _pages,
             ),
           ],
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:trucks/user/user_dashbaord.dart';
 import 'data/Provider/user.dart';
 import 'onboarding/splash_screen.dart';
 
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const SplashScreen(),
+        home: UserDashbaord(),
       ),
     );
   }
