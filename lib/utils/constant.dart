@@ -7,6 +7,11 @@ class Constant {
   static const Color lightgrey_color = Color(0XFFEEF1F4);
   static const Color lightpink_color = Color(0XFFFCEEED);
   static const Color lighblue_color = Color(0XFF5471E8);
+  static const Color deep_blue = Color(0XFF001258);
+  static const Color light_blue2 = Color(0XFFDDDCEC);
 }
+
+
+
 
 const baseUrl = "https://aikaloadservice-dev.herokuapp.com";
