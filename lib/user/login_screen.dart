@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trucks/data/Network/rest_api.dart';
+import 'package:trucks/data/Provider/user.dart';
 import 'package:trucks/user/user_dashbaord.dart';
 import 'package:trucks/utils/constant.dart';
 
 import '../onboarding/get_started.dart';
-import '../utils/widgets.dart';
+import '../utils/Wigets/widgets.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -174,6 +176,10 @@ class LoginScreen extends StatelessWidget {
                               username: emailTEC.text,
                               password: passwordTEC.text);
                           if (result['error'] == false) {
+                            //save user details in model
+                            await Provider.of<Users>(context, listen: false)
+                                .setProfile(result['data']);
+
                             Navigator.pop(context);
                             //naviagte to Home screen
                             Navigator.pushReplacement(

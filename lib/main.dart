@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:trucks/data/Provider/trucks.dart';
+import 'package:trucks/user/login_screen.dart';
+import 'package:trucks/user/truck_details.dart';
 import 'package:trucks/user/user_dashbaord.dart';
 import 'data/Provider/user.dart';
 import 'onboarding/splash_screen.dart';
@@ -21,6 +24,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => Users()),
+        ChangeNotifierProvider(create: (_) => Trucks()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -28,7 +32,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: UserDashbaord(),
+        home: LoginScreen(),
       ),
     );
   }

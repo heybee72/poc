@@ -4,7 +4,7 @@ import 'package:trucks/data/Network/rest_api.dart';
 import 'package:trucks/user/login_screen.dart';
 import 'package:trucks/utils/constant.dart';
 
-import '../utils/widgets.dart';
+import '../utils/Wigets/widgets.dart';
 
 class SelectScreen extends StatefulWidget {
   const SelectScreen({Key? key}) : super(key: key);
@@ -192,7 +192,7 @@ class _SelectScreenState extends State<SelectScreen> {
                         Transform.scale(
                           scale: 2,
                           child: Radio(
-                            value: 3,
+                            value: 1,
                             groupValue: _value,
                             onChanged: (value) {
                               setState(() {

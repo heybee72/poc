@@ -4,34 +4,42 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class User {
-  var fname;
-  var lname;
-  var phone;
-  var email;
+  String fname;
+  String lname;
+  String phone;
+  String email;
+  String companyName;
+  var userId;
 
   User({
     required this.fname,
     required this.lname,
     required this.phone,
     required this.email,
+    required this.companyName,
+    required this.userId,
   });
 }
 
 class Users with ChangeNotifier {
-  User _rider = User(
+  User _user = User(
     fname: "",
     lname: "",
     phone: "",
     email: "",
+    companyName: "",
+    userId: "",
   );
-  User get rider => _rider;
+  User get user => _user;
 
   Future<void> setProfile(var data) async {
-    _rider = User(
-      fname: data['first_name'] ?? "",
-      lname: data['last_name'] ?? "",
-      phone: data['phone'] ?? "",
+    _user = User(
+      fname: data['firstName'] ?? "",
+      lname: data['lastName'] ?? "",
+      phone: data['phoneNumber'] ?? "",
       email: data['email'] ?? "",
+      companyName: data['companyName'] ?? "",
+      userId: data['userId'] ?? "",
     );
     notifyListeners();
   }

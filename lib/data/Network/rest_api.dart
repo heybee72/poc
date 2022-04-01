@@ -137,10 +137,13 @@ Future login({
     if (response.statusCode == 200 &&
         json.decode(response.body)['responseMessage'] ==
             "User Authentication was successful") {
+      var data = json.decode(response.body)['data'];
       var result = {
         "error": false,
         "message": json.decode(response.body)['responseMessage'],
+        "data": data,
       };
+
       return result;
     } else {
       print("Registration error ++++++++++");
@@ -263,6 +266,100 @@ Future getAuthenticationTokenForPhone({required username}) async {
       var result = {
         "error": false,
         "message": json.decode(response.body)['responseMessage'],
+      };
+      return result;
+    } else {
+      print("Registration error ++++++++++");
+      var result = {
+        "error": true,
+        "message": json.decode(response.body)['error_description'],
+      };
+      return result;
+    }
+  } else {
+    var result = {
+      "error": true,
+      "message": "Failed to get token... please try again",
+    };
+    return result;
+  }
+}
+
+//GET TRUCK PER USER
+Future getTrucksPerUser({
+  required String userId,
+}) async {
+  String url = baseUrl + "/truck/get-truck-by-userId/$userId";
+  final prefs = await SharedPreferences.getInstance();
+
+  //get token
+  var result = await getToken();
+
+  if (result['error'] != false) {
+    String accessToken = prefs.getString('token').toString();
+
+    var response = await get(
+      Uri.parse(url),
+      headers: {
+        "Content-type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Bearer $accessToken",
+      },
+    );
+
+    print("Registration response:: ${response.body}");
+    if (response.statusCode == 200 &&
+        json.decode(response.body)['responseMessage'] == "Successful") {
+      var result = {
+        "error": false,
+        "message": json.decode(response.body)['responseMessage'],
+        "data": json.decode(response.body)['data'],
+      };
+      return result;
+    } else {
+      print("Registration error ++++++++++");
+      var result = {
+        "error": true,
+        "message": json.decode(response.body)['error_description'],
+      };
+      return result;
+    }
+  } else {
+    var result = {
+      "error": true,
+      "message": "Failed to get token... please try again",
+    };
+    return result;
+  }
+}
+
+//GET TRUCK FOR GUEST
+Future getTrucks() async {
+  String url = baseUrl + "/truck/get-trucks";
+  final prefs = await SharedPreferences.getInstance();
+
+  //get token
+  var result = await getToken();
+
+  if (result['error'] != false) {
+    String accessToken = prefs.getString('token').toString();
+
+    var response = await get(
+      Uri.parse(url),
+      headers: {
+        "Content-type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Bearer $accessToken",
+      },
+    );
+
+    print("Registration response:: ${response.body}");
+    if (response.statusCode == 200 &&
+        json.decode(response.body)['responseMessage'] == "Successful") {
+      var result = {
+        "error": false,
+        "message": json.decode(response.body)['responseMessage'],
+        "data": json.decode(response.body)['data'],
       };
       return result;
     } else {
