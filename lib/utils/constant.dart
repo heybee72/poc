@@ -9,6 +9,7 @@ class Constant {
   static const Color lighblue_color = Color(0XFF5471E8);
   static const Color deep_blue = Color(0XFF001258);
   static const Color light_blue2 = Color(0XFFDDDCEC);
+  static const Color light_blue3 = Color(0XFFC8D0EC);
 }
 
 

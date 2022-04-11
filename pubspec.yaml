@@ -38,6 +38,7 @@ dependencies:
   provider: any
   http: any
   shared_preferences: any
+  solid_bottom_sheet: ^0.1.10
 
 dev_dependencies:
   flutter_test:
