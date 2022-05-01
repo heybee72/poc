@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:trucks/data/Provider/image_picker.dart';
 import 'package:trucks/data/Provider/trucks.dart';
 import 'package:trucks/user/truck_details.dart';
 import 'package:trucks/user/user_dashbaord.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => Users()),
         ChangeNotifierProvider(create: (_) => Trucks()),
+        ChangeNotifierProvider(create: (_) => ImagePickerService()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: Uploadvideo(),
+        home: SplashScreen(),
       ),
     );
   }

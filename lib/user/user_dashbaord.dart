@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trucks/add_truck/add_truck.dart';
 import 'package:trucks/data/Provider/user.dart';
 import 'package:trucks/utils/Wigets/custom_cards.dart';
 import 'package:trucks/utils/constant.dart';
@@ -223,7 +224,15 @@ class _UserDashbaordState extends State<UserDashbaord> {
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        //navigate to add truck screen
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddTruck(),
+                          ),
+                        );
+                      },
                       child: Row(
                         children: [
                           const Padding(

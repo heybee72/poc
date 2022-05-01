@@ -39,6 +39,9 @@ dependencies:
   http: any
   shared_preferences: any
   solid_bottom_sheet: ^0.1.10
+  image_picker: any
+  cloudinary_sdk: ^3.0.1+7
+
 
 dev_dependencies:
   flutter_test:

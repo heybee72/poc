@@ -4,6 +4,82 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../utils/constant.dart';
 
+//CREATE TRUCK
+Future createTruck({
+  required bool airConditioner,
+  required int createdBy,
+  required String description,
+  required String location,
+  required String plateNumber,
+  required String transmission,
+  required int truckModelId,
+  required String truckName,
+  required String truckSize,
+  required int truckStatus,
+  required int truckTypeId,
+  required String truckVideos,
+  required String truckYear,
+  required String verificationStatus,
+}) async {
+  String url = baseUrl + "/truck/create-truck";
+  final prefs = await SharedPreferences.getInstance();
+
+  //get token
+  var result = await getToken();
+
+  if (result['error'] == false) {
+    String accessToken = prefs.getString('token').toString();
+
+    var body = {
+      "airConditionerAvailable": airConditioner,
+      "createdBy": createdBy,
+      "description": description,
+      "location": location,
+      "plateNumber": plateNumber,
+      "transmission": transmission,
+      "truckModelId": truckModelId,
+      "truckName": truckName,
+      "truckSize": truckSize,
+      "truckStatus": truckStatus,
+      "truckTypeId": truckTypeId,
+      "truckVideos": [truckVideos],
+      "truckYear": truckYear,
+      "verificationStatus": verificationStatus,
+    };
+
+    var response = await post(Uri.parse(url),
+        headers: {
+          "Content-type": "application/json",
+          "Accept": "application/json",
+          "Authorization": "Bearer $accessToken",
+        },
+        body: json.encode(body));
+
+    print("create response:: ${response.body}");
+    if (response.statusCode == 200 &&
+        json.decode(response.body)['responseMessage'] == "Successful") {
+      var result = {
+        "error": false,
+        "message": json.decode(response.body)['responseMessage'],
+      };
+      return result;
+    } else {
+      print("error ++++++++++");
+      var result = {
+        "error": true,
+        "message": json.decode(response.body)['error_description'],
+      };
+      return result;
+    }
+  } else {
+    var result = {
+      "error": true,
+      "message": "Failed to get token... please try again",
+    };
+    return result;
+  }
+}
+
 //get auth token
 Future getToken() async {
   String otpUrl = baseUrl + "/auth/token";
@@ -149,7 +225,7 @@ Future login({
       print("Registration error ++++++++++");
       var result = {
         "error": true,
-        "message": json.decode(response.body)['error_description'],
+        "message": json.decode(response.body)['responseMessage'],
       };
       return result;
     }
