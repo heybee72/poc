@@ -1,5 +1,6 @@
 //
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../utils/constant.dart';
@@ -21,43 +22,44 @@ Future createTruck({
   required String truckYear,
   required String verificationStatus,
 }) async {
-  String url = baseUrl + "/truck/create-truck";
   final prefs = await SharedPreferences.getInstance();
+  var video = [];
+  video.add(truckVideos);
+  var body = {
+    "airConditionerAvailable": airConditioner,
+    "createdBy": createdBy,
+    "description": description,
+    "location": location,
+    "plateNumber": plateNumber,
+    "transmission": transmission.toUpperCase(),
+    "truckModelId": truckModelId,
+    "truckName": truckName,
+    "truckSize": truckSize,
+    "truckStatus": truckStatus,
+    "truckTypeId": truckTypeId,
+    "truckVideos": video,
+    "truckYear": truckYear,
+    "verificationStatus": verificationStatus,
+  };
+
+  print("Payload============ $body");
 
   //get token
   var result = await getToken();
 
   if (result['error'] == false) {
     String accessToken = prefs.getString('token').toString();
-
-    var body = {
-      "airConditionerAvailable": airConditioner,
-      "createdBy": createdBy,
-      "description": description,
-      "location": location,
-      "plateNumber": plateNumber,
-      "transmission": transmission,
-      "truckModelId": truckModelId,
-      "truckName": truckName,
-      "truckSize": truckSize,
-      "truckStatus": truckStatus,
-      "truckTypeId": truckTypeId,
-      "truckVideos": [truckVideos],
-      "truckYear": truckYear,
-      "verificationStatus": verificationStatus,
-    };
+    String url = baseUrl + "/truck/create-truck?access_token=" + accessToken;
 
     var response = await post(Uri.parse(url),
         headers: {
           "Content-type": "application/json",
           "Accept": "application/json",
-          "Authorization": "Bearer $accessToken",
         },
         body: json.encode(body));
 
     print("create response:: ${response.body}");
-    if (response.statusCode == 200 &&
-        json.decode(response.body)['responseMessage'] == "Successful") {
+    if (response.statusCode == 200) {
       var result = {
         "error": false,
         "message": json.decode(response.body)['responseMessage'],
@@ -443,6 +445,57 @@ Future getTrucks() async {
       var result = {
         "error": true,
         "message": json.decode(response.body)['error_description'],
+      };
+      return result;
+    }
+  } else {
+    var result = {
+      "error": true,
+      "message": "Failed to get token... please try again",
+    };
+    return result;
+  }
+}
+
+//upload video
+Future uploadAndGetVideoLink(String videoPath) async {
+  String url = baseUrl + "/file/get-link";
+  final prefs = await SharedPreferences.getInstance();
+
+  //get token
+  var result = await getToken();
+
+  if (result['error'] == false) {
+    String accessToken = prefs.getString('token').toString();
+    var requestBody = {
+      'file': videoPath,
+    };
+    Map<String, String> headers = {
+      'Content-Type': 'multipart/form-data',
+      "Accept": "application/json",
+      "Authorization": "Bearer $accessToken"
+    };
+    var request = MultipartRequest('POST', Uri.parse(url));
+    request.fields.addAll(requestBody);
+    request.headers.addAll(headers);
+    request.files.add(await MultipartFile.fromPath('file', videoPath));
+    var response = await request.send();
+    var respStr = await response.stream.bytesToString();
+
+    if (kDebugMode) {
+      print("Registration response:: $respStr");
+    }
+    if (response.statusCode == 200) {
+      var result = {
+        "error": false,
+        "data": respStr,
+      };
+      return result;
+    } else {
+      print("Registration error ++++++++++");
+      var result = {
+        "error": true,
+        "message": "Error uploading video",
       };
       return result;
     }

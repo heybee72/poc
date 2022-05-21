@@ -4,6 +4,7 @@ import 'package:trucks/add_truck/add_truck.dart';
 import 'package:trucks/data/Provider/user.dart';
 import 'package:trucks/utils/Wigets/custom_cards.dart';
 import 'package:trucks/utils/constant.dart';
+import 'package:video_player/video_player.dart';
 
 import '../data/Provider/trucks.dart';
 import 'inner_screens/active_screen.dart';
@@ -22,6 +23,9 @@ class _UserDashbaordState extends State<UserDashbaord> {
   //   ActiveScreen(),
   //   ExpiredScreen(),
   // ];
+
+
+
 
   @override
   void dispose() {
@@ -350,8 +354,9 @@ class _UserDashbaordState extends State<UserDashbaord> {
                                             },
                                             child: CardTemplate(
                                               by: userInstance.user.fname,
-                                              image: truckInstance
-                                                  .active[index].truckImages[0],
+                                              image: truckInstance.active[index]
+                                                      .truckImages[0]
+                                                  ['truckImageUrl'],
                                               desc:
                                                   "${truckInstance.active[index].truckModelName} \navailable for sale in ikeja",
                                               price: "N 12,000.00 /day",

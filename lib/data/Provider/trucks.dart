@@ -51,7 +51,7 @@ class Trucks with ChangeNotifier {
     //get token
     var result = await getToken();
 
-    if (result['error'] != false) {
+    if (result['error'] == false) {
       String accessToken = prefs.getString('token').toString();
 
       var response = await get(
@@ -64,8 +64,7 @@ class Trucks with ChangeNotifier {
       );
 
       print("Registration response:: ${response.body}");
-      if (response.statusCode == 200 &&
-          json.decode(response.body)['responseMessage'] == "Successful") {
+      if (response.statusCode == 200) {
         //
 
         _active.clear();
@@ -89,7 +88,7 @@ class Trucks with ChangeNotifier {
             ));
 
             //
-            notifyListeners();
+            //notifyListeners();
           } else {
             _expired.add(Truck(
               id: item['id'],
@@ -104,9 +103,12 @@ class Trucks with ChangeNotifier {
               truckImages: item['truckImages'],
             ));
             //
-            notifyListeners();
+            //notifyListeners();
           }
         }
+
+        print("===========================Active trucks: $_active");
+        print("===========================Expired trucks: $_expired");
       } else {
         var result = {
           "error": false,

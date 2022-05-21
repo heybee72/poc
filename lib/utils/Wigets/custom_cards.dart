@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:trucks/utils/constant.dart';
+import 'package:video_player/video_player.dart';
 
-class CardTemplate extends StatelessWidget {
+class CardTemplate extends StatefulWidget {
   String image;
   String truckName;
   String by;
@@ -23,6 +24,13 @@ class CardTemplate extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<CardTemplate> createState() => _CardTemplateState();
+}
+
+class _CardTemplateState extends State<CardTemplate> {
+  late VideoPlayerController _controller;
+
+  @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 0.0,
@@ -35,7 +43,10 @@ class CardTemplate extends StatelessWidget {
             children: [
               SizedBox(
                   width: MediaQuery.of(context).size.width * 0.3,
-                  child: Image.asset(image)),
+                  child: Icon(
+                    Icons.play_arrow_outlined,
+                    size: 50,
+                  )),
 
               // trck description
               Padding(
@@ -43,24 +54,24 @@ class CardTemplate extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(truckName,
+                    Text(widget.truckName,
                         style: const TextStyle(
                             color: Constant.blue_color,
                             fontWeight: FontWeight.w800,
                             fontSize: 14)),
-                    Text(by,
+                    Text(widget.by,
                         style: const TextStyle(
                             color: Constant.grey_color,
                             fontWeight: FontWeight.w800,
                             fontSize: 12)),
                     const SizedBox(height: 8),
-                    Text(desc,
+                    Text(widget.desc,
                         style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w800,
                             fontSize: 12)),
                     const SizedBox(height: 8),
-                    Text(price,
+                    Text(widget.price,
                         style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -88,7 +99,7 @@ class CardTemplate extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(timeLeft,
+                  child: Text(widget.timeLeft,
                       style: const TextStyle(
                           color: Constant.blue_color,
                           fontWeight: FontWeight.w800,
@@ -109,7 +120,7 @@ class CardTemplate extends StatelessWidget {
                     children: [
                       Icon(Icons.receipt, size: 12),
                       Icon(Icons.circle_notifications, size: 12),
-                      Text(times,
+                      Text(widget.times,
                           style: const TextStyle(
                               color: Constant.blue_color,
                               fontWeight: FontWeight.w800,
@@ -127,7 +138,7 @@ class CardTemplate extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(location,
+                  child: Text(widget.location,
                       style: const TextStyle(
                           color: Constant.blue_color,
                           fontWeight: FontWeight.w800,

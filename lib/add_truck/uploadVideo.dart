@@ -25,8 +25,8 @@ class _UploadvideoState extends State<Uploadvideo> {
 
   bool _showBottomSheet = false;
   String videoState = 'Select Video';
-  final cloudinary =
-      Cloudinary("974695494724179", "caxRl6mWbggYApy88n4Ym9w25MU", "aikaload");
+  // final cloudinary =
+  //     Cloudinary("974695494724179", "caxRl6mWbggYApy88n4Ym9w25MU", "aikaload");
 
   @override
   Widget build(BuildContext context) {
@@ -92,33 +92,25 @@ class _UploadvideoState extends State<Uploadvideo> {
                           await imagePicker.pickImage(
                               context, MediaQuery.of(context).size);
                           if (imagePicker.pickedFile.path != "") {
-                            setState(() {
-                              videoState = 'Video Selected';
-                            });
-
-                            loadingDialog(context, "Uploading... please wait");
-                            final response = await cloudinary.uploadFile(
-                                filePath: imagePicker.pickedFile.path,
-                                resourceType: CloudinaryResourceType.video,
-                                
-                                folder:
-                                    "users/${user.user.userId}/trucks/${widget.truckDetails['truckId']}",
-                                fileName: "truckVideo");
-
                             print(
-                                "response from cloudinary ${response.secureUrl}");
-
-                            if (response.isSuccessful) {
-                              //Do something else
-                              print("response from cloudinary $response");
-                              widget.truckDetails['truckVideos'] =
-                                  response.secureUrl;
-                              Navigator.pop(context);
-                            } else {
-                              print(
-                                  "response from cloudinary  ERROR${response.error}");
-                              Navigator.pop(context);
-                            }
+                                '==============${imagePicker.pickedFile.path}');
+                            loadingDialog(context, "Uploading...");
+                            uploadAndGetVideoLink(imagePicker.pickedFile.path)
+                                .then((value) {
+                              print('==========================$value');
+                              if (value['error'] == false) {
+                                videoState = 'Video Uploaded';
+                                widget.truckDetails['truckVideos'] =
+                                    value['data'];
+                                Navigator.pop(context);
+                                setState(() {});
+                              } else {
+                                openDialog(context, "video Upload",
+                                    "Failed to uplaod video", () {
+                                  Navigator.pop(context);
+                                });
+                              }
+                            });
                           }
                         },
                         child: Center(
@@ -167,11 +159,12 @@ class _UploadvideoState extends State<Uploadvideo> {
 
                           widget.truckDetails['createdBy'] = user.user.userId;
                           widget.truckDetails['verificationStatus'] =
-                              'verified';
+                              'VERIFIED';
                           widget.truckDetails['truckModelId'] = 1;
                           widget.truckDetails['truckTypeId'] = 1;
 
                           print(widget.truckDetails);
+                          await Future.delayed(const Duration(seconds: 10));
 
                           var result = await createTruck(
                             airConditioner:
