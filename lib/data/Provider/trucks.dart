@@ -63,7 +63,7 @@ class Trucks with ChangeNotifier {
         },
       );
 
-      print("Registration response:: ${response.body}");
+      print("Get Truck Response response:: ${response.body}");
       if (response.statusCode == 200) {
         //
 
