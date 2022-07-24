@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:search_page/search_page.dart';
 import 'package:trucks/add_truck/add_truck.dart';
 import 'package:trucks/data/Provider/user.dart';
 import 'package:trucks/utils/Wigets/custom_cards.dart';
@@ -48,15 +49,52 @@ class _UserDashbaordState extends State<UserDashbaord> {
               size: 40,
             ),
           ),
-          actions: const [
-            Icon(Icons.search_outlined,
-                color: Constant.lighblue_color, size: 40),
-            SizedBox(
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.search_outlined,
+                  color: Constant.lighblue_color, size: 40),
+              onPressed: () {
+                showSearch(
+                  context: context,
+                  delegate: SearchPage<Truck>(
+                    items: truckInstance.active,
+                    searchLabel: 'Search Truck',
+                    suggestion: const Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Center(
+                        child: Text(
+                          'You can search by Truck Name,\nTruck Type,\nTruck Plate Number and\nTruck Year',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                    failure: const Center(
+                      child: Text('NO! Search Result Found'),
+                    ),
+                    filter: (truck) => [
+                      truck.truckModelName,
+                      truck.truckTypeName,
+                      truck.truckYear,
+                      truck.plateNumber,
+                    ],
+                    builder: (truck) => ListTile(
+                      title: Text(truck.truckModelName),
+                      subtitle: Text(truck.truckTypeName),
+                      trailing: Text(truck.truckYear),
+                    ),
+                  ),
+                );
+              },
+            ),
+            const SizedBox(
               width: 20,
             ),
-            Icon(Icons.notifications_outlined,
+            const Icon(Icons.notifications_outlined,
                 color: Constant.blue_color, size: 40),
-            SizedBox(
+            const SizedBox(
               width: 35,
             ),
           ],
